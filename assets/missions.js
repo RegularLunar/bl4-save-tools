@@ -7,36 +7,13 @@
  * - Mission set merging and updates
  */
 
-/**
- * Maps user-friendly mission type names to their internal missionset prefixes.
- * Used for filtering and identifying different types of missions in the save file.
- * @const {Object<string, string>}
- */
-const MISSION_PREFIXES = {
-  all: 'missionset_',
-  story: 'missionset_main_',
-  micro: 'missionset_micro_',
-  side: 'missionset_side_',
-  vault: 'missionset_vault_',
-  activity: 'missionset_zoneactivity_',
-  crawler: 'missionset_zoneactivity_crawler',
-  drillsite: 'missionset_zoneactivity_drillsite',
-  mine: 'missionset_zoneactivity_mine',
-  bunker: 'missionset_zoneactivity_orderbunker',
-  safehouse: 'missionset_zoneactivity_safehouse',
-  silo: 'missionset_zoneactivity_silo',
-};
 
 /**
- * Extracts all mission sets of a specific type from the mission data.
- * @param {string} type - The type of missions to extract (e.g., 'story', 'activity')
+ * Extracts all mission sets with a specific prefix from the mission data.
+ * @param {string} prefix - The prefix of the missionset key to extract (e.g., 'missionset_main')
  * @returns {Object} Object containing filtered mission sets
- * @throws {Error} If the mission type is unknown
  */
-function getMissionsetsOfType(type) {
-  const prefix = MISSION_PREFIXES[type];
-  if (!prefix) throw new Error(`Unknown mission type: ${type}`);
-
+function getMissionsetsWithPrefix(prefix) {
   const result = {};
   for (const key in MISSIONSETS) {
     if (key.startsWith(prefix)) {
@@ -46,12 +23,11 @@ function getMissionsetsOfType(type) {
   return result;
 }
 
-// Merge missionsets of a given type into save data
-function mergeMissionsetsOfType(type) {
+// Merge missionsets with a specific prefix into the save file
+function mergeMissionsetsWithPrefix(prefix) {
   const data = getYamlDataFromEditor();
   if (!data) return;
-
-  const filteredMissionsets = getMissionsetsOfType(type);
+  const filteredMissionsets = getMissionsetsWithPrefix(prefix);
 
   if (!data.missions) data.missions = {};
   if (!data.missions.local_sets) data.missions.local_sets = {};
@@ -65,7 +41,7 @@ function mergeMissionsetsOfType(type) {
 }
 
 function completeAllMissions() {
-  mergeMissionsetsOfType('all');
+  mergeMissionsetsWithPrefix('missionset_');
   stageEpilogueMission();
   if (typeof setStoryValues === 'function') setStoryValues();
   if (typeof openAllVaultDoors === 'function') openAllVaultDoors();
@@ -74,14 +50,14 @@ function completeAllMissions() {
 }
 
 function completeAllStoryMissions() {
-  mergeMissionsetsOfType('story');
+  mergeMissionsetsWithPrefix('missionset_main_');
   stageEpilogueMission();
   if (typeof setStoryValues === 'function') setStoryValues();
 }
 
 function completeAllSafehouseMissions() {
-  mergeMissionsetsOfType('safehouse');
-  mergeMissionsetsOfType('silo');
+  mergeMissionsetsWithPrefix('missionset_zoneactivity_safehouse');
+  mergeMissionsetsWithPrefix('missionset_zoneactivity_silo');
   if (typeof discoverSafehouseLocations === 'function') discoverSafehouseLocations();
   if (typeof updateSDUPoints === 'function') updateSDUPoints();
 }

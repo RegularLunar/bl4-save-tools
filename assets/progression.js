@@ -336,18 +336,14 @@ function unlockMaxEverything() {
     if (typeof completeAllAchievements === 'function') completeAllAchievements();
 
     // Missions / progression
-    if (typeof completeAllSafehouseMissions === 'function') completeAllSafehouseMissions();
     if (typeof completeAllMissions === 'function') completeAllMissions();
-    if (typeof completeAllStoryMissions === 'function') completeAllStoryMissions();
-    if (typeof stageEpilogueMission === 'function') stageEpilogueMission();
 
-    // SDU / progression graphs
+    // SDU
     if (typeof setMaxSDU === 'function') setMaxSDU();
-    if (typeof updateSDUPoints === 'function') updateSDUPoints();
 
     // Unlocks / systems
     if (typeof unlockVaultPowers === 'function') unlockVaultPowers();
-    if (typeof unlockUVHMode === 'function') unlockUVHMode();
+    if (typeof unlockPostgame === 'function') unlockPostgame();
     if (typeof unlockAllHoverDrives === 'function') unlockAllHoverDrives();
     if (typeof unlockAllSpecialization === 'function') unlockAllSpecialization();
 

@@ -103,7 +103,7 @@ function unlockVaultPowers() {
   editor.setValue(newYaml);
 }
 
-function unlockUVHMode() {
+function unlockPostgame() {
   const data = getYamlDataFromEditor();
   if (!data) return;
 
@@ -111,11 +111,11 @@ function unlockUVHMode() {
   data.globals.highest_unlocked_vault_hunter_level = 5;
   data.globals.vault_hunter_level = 1;
 
-  completeUVHChallenges();
-
-  // Update editor
   const newYaml = jsyaml.dump(data, { lineWidth: -1, noRefs: true });
   editor.setValue(newYaml);
+
+  if (typeof completeUVHChallenges === 'function') completeUVHChallenges();
+  if (typeof mergeMissionsetsWithPrefix === 'function') mergeMissionsetsWithPrefix('missionset_main_postgame');
 }
 
 /**

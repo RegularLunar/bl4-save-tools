@@ -65,6 +65,7 @@ These run JavaScript functions which apply pre-configured edits to save files qu
   - Does not add PoI markers. See "Discover all locations".
 - **Discover all locations**
   - Reveals all point of interest (PoI) markers on your map.
+  - Unlocks achievements for location discovery.
 - **Unlock all safehouses**
   - Unlocks fast travel to all safehouses and silos by completing related mission (activities).
   - Re-calculates SDU points, applying the new total if it's higher.
@@ -108,9 +109,10 @@ These run JavaScript functions which apply pre-configured edits to save files qu
 - **Unlock all specializations**
   - Unlocks the specialization system. [More info](docs/unlockables.md)
   - Sets maximum level and fully completes all trees.
-- **Unlock UVHM** (Ultimate Vault Hunter Mode, i.e. post-game)
-  - Sets values in the save to unlock UVH rank 1-5. You can switch between them in-game.
-  - Doesn't complete any missions, so you could theoretically play the story from level 1 in UVHM difficulty which isn't otherwise possible.
+- **Unlock UVHM & post-game activities**
+  - Sets values in the save to unlock Ultimate Vault Hunter rank 1-5. You can switch between them in-game.
+  - Completes the post-game tutorial mission which unlocks the **firmware system**, **Maurice's Black Market**, and **Moxxi's Big Encore**
+  - Doesn't complete any other missions, so you could theoretically play the story from level 1 in UVHM difficulty which isn't otherwise possible.
   - Loading a save with this & story completion will enable starting at level 30 (flag is automatically added to `profile.sav`).
   - Completes all UVH challenges.
 

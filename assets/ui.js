@@ -115,9 +115,9 @@ const PRESETS = [
     group: 'World',
   },
   {
-    handler: 'unlockUVHMode',
-    title: 'Unlock UVHM',
-    desc: 'Sets flags to unlock UVH mode.',
+    handler: 'unlockPostgame',
+    title: 'Unlock UVHM / Postgame',
+    desc: 'Sets flags to unlock UVH mode and post-game activities.',
     saveType: 'character',
     group: 'Character',
   },
