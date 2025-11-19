@@ -157,8 +157,8 @@ function addDiscoveredLocations(data, locationSubstrings) {
 
 /**
  * Discovers all locations in the game world.
- * Currently adds all possible location types including activities,
- * safehouses, and points of interest.
+ * Adds all location types including activities, safehouses, and points of interest.
+ * Also completes achievement counters for location discovery.
  */
 function discoverAllLocations() {
   const data = getYamlDataFromEditor();
@@ -169,6 +169,8 @@ function discoverAllLocations() {
 
   const newYaml = jsyaml.dump(data, { lineWidth: -1, noRefs: true });
   editor.setValue(newYaml);
+
+  if (typeof completeDiscoveryAchievements === 'function') completeDiscoveryAchievements();
 }
 
 function discoverSafehouseLocations() {
