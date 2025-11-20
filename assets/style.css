@@ -91,7 +91,7 @@ button {
   font-size: 1em;
   cursor: pointer;
   transition: 0.2s;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.35), 0 0px 1px #000;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 0px 1px #000;
 }
 button:hover {
   background: #106adf;
@@ -99,7 +99,7 @@ button:hover {
 
 button.secondary {
   background: #444;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.35), 0 0px 1px #000;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 0px 1px #000;
 }
 button.secondary:hover,
 button.secondary:focus {
@@ -328,4 +328,53 @@ a:hover {
   color: #2d8cf0;
   text-decoration: underline;
   opacity: 1;
+}
+
+/* Modal / popup styles used by addItemSerials (and future configurable popups) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal {
+  /* reuse section-like color to fit site look */
+  background: #23272b;
+  color: #ddd;
+  padding: 16px;
+  border-radius: 8px;
+  width: 560px;
+  max-width: 94%;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+}
+
+.modal-desc {
+  margin: 8px 0 6px;
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+.modal-textarea {
+  width: 100%;
+  height: 120px;
+  margin-top: 6px;
+  background: #101214;
+  color: #eee;
+  border: 1px solid #333;
+  padding: 8px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.modal-btn-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
 }

@@ -269,3 +269,46 @@ function updateAllSerialLevels() {
   editor.setValue(newYaml);
   console.info('Item serials updated to level ' + level);
 }
+
+/**
+ * Inserts provided serial strings into new slots:
+ * - For profile saves -> data.domains.local.shared.inventory.items.bank
+ * - For character saves -> data.state.inventory.items.backpack
+ *
+ * New slots are named "slot_<n>" where n = max existing slot index + 1 ...,
+ * and each new slot will have state_flags: 1.
+ *
+ * @param {string[]} serials - Array of serial strings to insert (order preserved)
+ */
+function insertSerials(serials) {
+  const data = getYamlDataFromEditor();
+  if (!data || !Array.isArray(serials) || serials.length === 0) return;
+
+  if (isProfileSave) {
+    container = data.domains.local.shared.inventory.items.bank;
+  } else {
+    container = data.state.inventory.items.backpack;
+  }
+
+  // Determine next available numeric slot index (slot_<n>)
+  const nums = Object.keys(container)
+    .map((k) => {
+      const m = k.match(/^slot_(\d+)$/);
+      return m ? parseInt(m[1], 10) : null;
+    })
+    .filter((n) => n !== null);
+  let nextIndex = nums.length ? Math.max(...nums) + 1 : 0;
+
+  // Insert serials
+  let inserted = 0;
+  for (const s of serials) {
+    const key = `slot_${nextIndex++}`;
+    container[key] = { serial: s, state_flags: 1 };
+    inserted++;
+  }
+
+  const newYaml = jsyaml.dump(data, { lineWidth: -1, noRefs: true });
+  editor.setValue(newYaml);
+
+  console.info(`Inserted ${inserted} serials.`);
+}

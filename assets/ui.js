@@ -136,6 +136,13 @@ const PRESETS = [
     group: 'Misc',
   },
   {
+    handler: 'showAddItemsPopup',
+    title: 'Add Item Serials to Backpack',
+    desc: 'Adds user-provided item serials to backpack.',
+    saveType: 'character',
+    group: 'Misc',
+  },
+  {
     handler: 'unlockNewGameShortcuts',
     title: 'Unlock New Game Shortcuts',
     desc: 'Unlocks all new game shortcuts (skip prologue, skip story, specialization system).',
@@ -208,10 +215,15 @@ function renderPresets() {
         saveType: preset.saveType,
       };
 
-      // Special-case: updateAllSerialLevels also works for profile saves, but should be displayed differently in that case
+      // Special-case: these presets also work in profile saves, but should be displayed differently in that case
       if (preset.handler === 'updateAllSerialLevels' && isProfileSave) {
         display.title = `Set All Bank Items to Max Level (${MAX_LEVEL})`;
         display.desc = `Updates serials for all bank items to have max level (${MAX_LEVEL}).`;
+        display.saveType = 'profile';
+      }
+      if (preset.handler === 'showAddItemsPopup' && isProfileSave) {
+        display.title = `Add Item Serials to Bank`;
+        display.desc = `Adds user-provided item serials to bank.`;
         display.saveType = 'profile';
       }
 
@@ -445,4 +457,70 @@ function makeCharacterClassButtons() {
   }
 
   return classPresets;
+}
+
+/**
+ * Show a modal popup to insert item serials.
+ */
+function showAddItemsPopup() {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+
+  const header = document.createElement('div');
+  header.className = 'preset-group-header';
+  header.textContent = 'Add Item Serials';
+  modal.appendChild(header);
+
+  const desc = document.createElement('p');
+  desc.className = 'modal-desc';
+  desc.textContent = 'Enter the item serials you wish to add - one per line.';
+  modal.appendChild(desc);
+
+  const textarea = document.createElement('textarea');
+  textarea.value = '';
+  textarea.className = 'modal-textarea';
+  modal.appendChild(textarea);
+
+  const btnRow = document.createElement('div');
+  btnRow.className = 'modal-btn-row';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'secondary';
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.onclick = close;
+
+  const confirmBtn = document.createElement('button');
+  confirmBtn.textContent = 'Confirm';
+  confirmBtn.onclick = function () {
+    const raw = textarea.value || '';
+    const serials = raw
+      .split(/[\r\n]+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+    try {
+      if (typeof insertSerials === 'function') insertSerials(serials);
+    } finally {
+      close();
+    }
+  };
+
+  btnRow.appendChild(cancelBtn);
+  btnRow.appendChild(confirmBtn);
+  modal.appendChild(btnRow);
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+
+  function close() {
+    if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    document.removeEventListener('keydown', onKey);
+  }
+
+  function onKey(e) {
+    if (e.key === 'Escape') close();
+  }
+  document.addEventListener('keydown', onKey);
 }
