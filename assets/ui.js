@@ -24,6 +24,13 @@ let MAX_LEVEL = 50;
  */
 const PRESETS = [
   {
+    handler: 'showChangeClassPopup',
+    title: `Change Character Class`,
+    desc: `Changes character class (select from list).`,
+    saveType: 'character',
+    group: 'Character',
+  },
+  {
     handler: 'setCharacterToMaxLevel',
     title: `Max Level (${MAX_LEVEL})`,
     desc: `Sets character level to the maximum (${MAX_LEVEL}).`,
@@ -194,11 +201,6 @@ function renderPresets() {
 
     const grid = document.createElement('div');
     grid.className = 'preset-grid';
-
-    // If Character group, insert class change buttons first
-    if (groupName === 'Character') {
-      makeCharacterClassButtons().forEach((btnRow) => grid.appendChild(btnRow));
-    }
 
     PRESETS.filter((p) => (p.group || 'Misc') === groupName).forEach((preset) => {
       const row = document.createElement('div');
@@ -411,54 +413,6 @@ function clearPresetApplied() {
   });
 }
 
-const CHARACTER_CLASSES = {
-  DarkSiren: {
-    name: 'Vex',
-    class: 'Siren',
-  },
-  Paladin: {
-    name: 'Amon',
-    class: 'Forgeknight',
-  },
-  Gravitar: {
-    name: 'Harlowe',
-    class: 'Gravitar',
-  },
-  ExoSoldier: {
-    name: 'Rafa',
-    class: 'Exo-Soldier',
-  },
-};
-
-function makeCharacterClassButtons() {
-  let classPresets = [];
-  for (const [key, value] of Object.entries(CHARACTER_CLASSES)) {
-    const row = document.createElement('div');
-    row.className = 'preset-row';
-
-    const btn = document.createElement('button');
-    btn.className = 'secondary';
-    btn.textContent = `Change Class to ${value.class}`;
-    btn.title = value.name;
-    btn.style.position = 'relative';
-
-    if (isProfileSave) {
-      btn.disabled = true;
-      btn.title = 'This preset only applies to character saves.';
-    }
-
-    btn.onclick = function () {
-      setCharacterClass(key, value.name);
-      btn.classList.add('preset-applied');
-    };
-
-    row.appendChild(btn);
-    classPresets.push(row);
-  }
-
-  return classPresets;
-}
-
 /**
  * Show a modal popup to insert item serials.
  */
@@ -523,4 +477,103 @@ function showAddItemsPopup() {
     if (e.key === 'Escape') close();
   }
   document.addEventListener('keydown', onKey);
+}
+
+const CHARACTER_CLASSES = {
+  DarkSiren: {
+    name: 'Vex',
+    class: 'Siren',
+  },
+  Paladin: {
+    name: 'Amon',
+    class: 'Forgeknight',
+  },
+  Gravitar: {
+    name: 'Harlowe',
+    class: 'Gravitar',
+  },
+  ExoSoldier: {
+    name: 'Rafa',
+    class: 'Exo-Soldier',
+  },
+};
+
+/**
+ * Show a modal popup to choose a character class from the set defined in CHARACTER_CLASSES.
+ * Calls setCharacterClass(key, name) on confirm. Cancel closes the modal.
+ */
+function showChangeClassPopup() {
+  if (isProfileSave) {
+    alert('This action only applies to character saves.');
+    return;
+  }
+
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+
+  const header = document.createElement('div');
+  header.className = 'preset-group-header';
+  header.textContent = 'Change Character Class';
+  modal.appendChild(header);
+
+  const desc = document.createElement('p');
+  desc.className = 'modal-desc';
+  desc.textContent = 'Select the class you want to change to:';
+  modal.appendChild(desc);
+
+  const select = document.createElement('select');
+  select.className = 'modal-select';
+  select.style.width = '100%';
+  select.style.marginBottom = '12px';
+
+  // Populate options from CHARACTER_CLASSES
+  for (const [key, info] of Object.entries(CHARACTER_CLASSES)) {
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = `${info.class} (${info.name})`;
+    select.appendChild(opt);
+  }
+  modal.appendChild(select);
+
+  const btnRow = document.createElement('div');
+  btnRow.className = 'modal-btn-row';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'secondary';
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.onclick = close;
+
+  const confirmBtn = document.createElement('button');
+  confirmBtn.textContent = 'Confirm';
+  confirmBtn.onclick = function () {
+    const key = select.value;
+    if (!key || !CHARACTER_CLASSES[key]) {
+      alert('No class selected.');
+      return;
+    }
+    setCharacterClass(key, CHARACTER_CLASSES[key].name);
+    close();
+  };
+
+  btnRow.appendChild(cancelBtn);
+  btnRow.appendChild(confirmBtn);
+  modal.appendChild(btnRow);
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+
+  function close() {
+    if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    document.removeEventListener('keydown', onKey);
+  }
+  function onKey(e) {
+    if (e.key === 'Escape') close();
+  }
+  document.addEventListener('keydown', onKey);
+
+  // focus select for quick keyboard use
+  select.focus();
 }
