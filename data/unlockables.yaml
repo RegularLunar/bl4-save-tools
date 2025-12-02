@@ -80,18 +80,13 @@ unlockable_darksiren:
   - Unlockable_DarkSiren.skin54_nightsky
 unlockable_echo4:
   entries:
-  - Unlockable_Echo4.attachment01_partyhat
   - Unlockable_Echo4.Attachment01_PartyHat
   - Unlockable_Echo4.attachment02_bow
-  - Unlockable_Echo4.attachment03_bolt
   - Unlockable_Echo4.Attachment03_Bolt
-  - Unlockable_Echo4.Attachment04_Wings
   - Unlockable_Echo4.attachment04_wings
   - Unlockable_Echo4.attachment05_skull
-  - Unlockable_Echo4.attachment06_crystalhorn
   - Unlockable_Echo4.Attachment06_CrystalHorn
   - Unlockable_Echo4.attachment07_horns
-  - Unlockable_Echo4.attachment08_tinfoilhat
   - Unlockable_Echo4.Attachment08_TinfoilHat
   - Unlockable_Echo4.attachment09_goggles
   - Unlockable_Echo4.attachment10_crown
@@ -101,7 +96,6 @@ unlockable_echo4:
   - Unlockable_Echo4.attachment14_santahat
   - Unlockable_Echo4.attachment15_neonstar
   - Unlockable_Echo4.Body01_GeneVIV
-  - Unlockable_Echo4.Body02_Order
   - Unlockable_Echo4.body02_order
   - Unlockable_Echo4.Body03_Ripper
   - Unlockable_Echo4.Skin01_Prison
@@ -421,16 +415,11 @@ unlockable_vehicles:
   - Unlockable_Vehicles.Mat33_Creepy
   - Unlockable_Vehicles.Mat34_MoneyCamo
   - Unlockable_Vehicles.Mat35_GearboxDev
-  - Unlockable_Vehicles.mat40_animemech
   - Unlockable_Vehicles.Mat40_AnimeMech
-  - Unlockable_Vehicles.Mat41_Synthesizer
   - Unlockable_Vehicles.mat41_synthesizer
   - Unlockable_Vehicles.Mat42_Gratata
-  - Unlockable_Vehicles.mat43_nitroflame
   - Unlockable_Vehicles.Mat43_NitroFlame
-  - Unlockable_Vehicles.Mat44_HotRod
   - Unlockable_Vehicles.mat44_hotrod
-  - Unlockable_Vehicles.mat45_ripperuncommon
   - Unlockable_Vehicles.Mat45_RipperUncommon
   - Unlockable_Vehicles.mat46_daedalusuncommon
   - Unlockable_Vehicles.mat47_jakobsuncommon
