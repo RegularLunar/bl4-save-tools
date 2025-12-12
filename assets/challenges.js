@@ -41,6 +41,7 @@ function completeUVHChallenges() {
     mission_uvh_5a: 1,
     mission_uvh_5b: 1,
     mission_uvh_5c: 1,
+    mission_uvh_6a: 1,
     uvh_1_finalchallenge: 1,
     uvh_2_finalchallenge: 1,
     uvh_3_finalchallenge: 1,

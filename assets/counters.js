@@ -108,7 +108,7 @@ function unlockPostgame() {
   if (!data) return;
 
   data.globals = data.globals || {};
-  data.globals.highest_unlocked_vault_hunter_level = 5;
+  data.globals.highest_unlocked_vault_hunter_level = 6;
   data.globals.vault_hunter_level = 1;
 
   const newYaml = jsyaml.dump(data, { lineWidth: -1, noRefs: true });
