@@ -77,7 +77,11 @@ unlockable_darksiren:
   - Unlockable_DarkSiren.skin48_krampusclaus
   - Unlockable_DarkSiren.skin49_midcentury
   - Unlockable_DarkSiren.Skin51_LoreUnique
+  - Unlockable_DarkSiren.Skin52_Altas
+  - Unlockable_DarkSiren.Skin53_Hyperion
   - Unlockable_DarkSiren.skin54_nightsky
+  - Unlockable_DarkSiren.Skin55_Blizzard
+  - Unlockable_DarkSiren.Skin56_COV
 unlockable_echo4:
   entries:
   - Unlockable_Echo4.Attachment01_PartyHat
@@ -148,6 +152,7 @@ unlockable_echo4:
   - Unlockable_Echo4.skin49_midcentury
   - Unlockable_Echo4.Skin50_BreakTheGame
   - Unlockable_Echo4.skin54_nightsky
+  - Unlockable_Echo4.Skin55_Blizzard
 unlockable_exosoldier:
   entries:
   - Unlockable_ExoSoldier.Body01_Prison
@@ -221,7 +226,11 @@ unlockable_exosoldier:
   - Unlockable_ExoSoldier.skin48_krampusclaus
   - Unlockable_ExoSoldier.skin49_midcentury
   - Unlockable_ExoSoldier.Skin51_LoreUnique
+  - Unlockable_ExoSoldier.Skin52_Altas
+  - Unlockable_ExoSoldier.Skin53_Hyperion
   - Unlockable_ExoSoldier.skin54_nightsky
+  - Unlockable_ExoSoldier.Skin55_Blizzard
+  - Unlockable_ExoSoldier.Skin56_COV
 unlockable_gravitar:
   entries:
   - Unlockable_Gravitar.Body01_Prison
@@ -295,7 +304,11 @@ unlockable_gravitar:
   - Unlockable_Gravitar.skin48_krampusclaus
   - Unlockable_Gravitar.skin49_midcentury
   - Unlockable_Gravitar.Skin51_LoreUnique
+  - Unlockable_Gravitar.Skin52_Altas
+  - Unlockable_Gravitar.Skin53_Hyperion
   - Unlockable_Gravitar.skin54_nightsky
+  - Unlockable_Gravitar.Skin55_Blizzard
+  - Unlockable_Gravitar.Skin56_COV
 unlockable_paladin:
   entries:
   - Unlockable_Paladin.Body01_Prison
@@ -369,7 +382,11 @@ unlockable_paladin:
   - Unlockable_Paladin.skin48_krampusclaus
   - Unlockable_Paladin.skin49_midcentury
   - Unlockable_Paladin.Skin51_LoreUnique
+  - Unlockable_Paladin.Skin52_Altas
+  - Unlockable_Paladin.Skin53_Hyperion
   - Unlockable_Paladin.skin54_nightsky
+  - Unlockable_Paladin.Skin55_Blizzard
+  - Unlockable_Paladin.Skin56_COV
 unlockable_vehicles:
   entries:
   - Unlockable_Vehicles.Borg
