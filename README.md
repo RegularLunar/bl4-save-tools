@@ -8,23 +8,27 @@ Web-based tool for modifying Borderlands 4 (PC) save files.
 - Export as re-encrypted `.sav` file or YAML
 - Manually edit save YAML within the web page
 - Apply preset modifications
-  - Change class
-  - Max level (50)
   - Remove map fog
   - Discover all locations
   - Unlock all safehouses
   - Unlock all collectibles
+  - Complete all challenges
+  - Unlock all achievements
+  - Skip story missions
+  - Skip all missions
+  - Change class
+  - Max level (50)
+  - Max SDU
   - Unlock all vault powers
   - Unlock all hover drives
   - Unlock all specializations
-  - Skip story missions
-  - Skip all missions
-  - Complete all challenges
-  - Unlock UVHM
+  - Unlock UVHM & post-game activities
+  - Add item serials
+  - Set all items to character level (or max level for bank items)
   - Unlock new game shortcuts - `profile.sav`
   - Unlock all cosmetics - `profile.sav`
 
-I don't plan to implement any sort of item editing.
+I don't plan to implement item editing beyond basic preset manipulations.
 
 ## Usage
 1. Open the online editor linked above or clone the repo and open `index.html` in any web browser.
@@ -56,26 +60,47 @@ These run JavaScript functions which apply pre-configured edits to save files qu
   - Example: "Unlock all collectibles" will technically just "collect" them. You'd also need to apply "Discover all locations" to have them shown on your map. 
 
 ---
-### Character Presets
+### World
+- **Remove map fog**
+  - Fully reveals the in-game map terrain by setting fog of war overlay for every map to 100% discovered. [Technical details](docs/exploration.md)
+  - Does not add PoI markers. See "Discover all locations".
+- **Discover all locations**
+  - Reveals all point of interest (PoI) markers on your map.
+  - Unlocks achievements for location discovery.
+- **Unlock all safehouses**
+  - Unlocks fast travel to all safehouses and silos by completing related mission (activities).
+  - Re-calculates SDU points, applying the new total if it's higher.
+  - Unlocks safehouse, silo, and town PoI markers.
+- **Unlock all collectibles**
+  - Marks all* collectibles as found. ECHO logs, capsules, etc. (bobble heads aren't included)
+  - Re-calculates SDU points, applying the new total if it's higher.
+  - Does not add PoI markers. See "Discover all locations".
+- **Complete all challenges**
+  - Completes all counter-based challenges.
+  - Does not complete activities or collectibles challenges. See "Skip all missions" and "Unlock all collectibles".
+  - Does not grant rewards for completion. [More info](docs/challenges.md)
+  - Unlocks some achievements. (UVH 5 & world events confirmed)
+- **Complete all achievements**
+  - Also completes all activities.
+  - Triggers platform achievements (Steam/Epic).
+- **Skip story missions**
+  - Completes all missions related to the main story. Doesn't modify any other missions.
+  - Functionally equivalent to starting a new save with the in-game story skip option. (Does not unlock that option)
+  - Enables the specialization system.
+- **Skip all missions**
+  - Completes all missions including the main story, vaults, and activities like drill sites.
+  - Enables the specialization system.
+  - Re-calculates SDU points, applying the new total if it's higher.
+
+### Character
 - **Change class**
   - Changes the character class.
   - Refunds skill points.
 - **Max level (50)**
   - Sets character level to the maximum.
   - Sets expected skill points & XP.
-- **Remove map fog**
-  - Fully reveals the in-game map terrain by setting fog of war overlay for every map to 100% discovered. [Technical details](docs/exploration.md)
-  - Does not add PoI markers. See "Discover all locations".
-- **Discover all locations**
-  - Reveals all point of interest (PoI) markers on your map.
-- **Unlock all safehouses**
-  - Unlocks fast travel to all safehouses and silos by completing related mission (activities).
-  - Re-calculates SDU points, applying the new total if it's higher.
-  - Does not add PoI markers. See "Discover all locations".
-- **Unlock all collectibles**
-  - Marks all* collectibles as found. ECHO logs, capsules, etc. (bobble heads aren't included)
-  - Re-calculates SDU points, applying the new total if it's higher.
-  - Does not add PoI markers. See "Discover all locations".
+- **Max SDU**
+  - Purchases all SDU upgrades, adding points if necessary.
 - **Unlock all vault powers**
   - Unlocks all vault poweres normally granted by completing vaults.
   - Included in "Unlock all collectibles".
@@ -85,30 +110,27 @@ These run JavaScript functions which apply pre-configured edits to save files qu
 - **Unlock all specializations**
   - Unlocks the specialization system. [More info](docs/unlockables.md)
   - Sets maximum level and fully completes all trees.
-- **Skip story missions**
-  - Completes all missions related to the main story. Doesn't modify any other missions.
-  - Functionally equivalent to starting a new save with the in-game story skip option. (Does not unlock that option)
-  - Enables the specialization system.
-- **Skip all missions**
-  - Completes all missions including the main story, vaults, and activities like drill sites.
-  - Enables the specialization system.
-  - Re-calculates SDU points, applying the new total if it's higher.
-- **Complete all challenges**
-  - Completes all counter-based challenges.
-  - Does not complete activities or collectibles challenges. See "Skip all missions" and "Unlock all collectibles".
-  - Does not grant rewards for completion. [More info](docs/challenges.md)
-  - Unlocks some achievements. (UVH 5 & world events confirmed)
-- **Unlock UVHM** (Ultimate Vault Hunter Mode, i.e. post-game)
-  - Sets values in the save to unlock UVH rank 1-5. You can switch between them in-game.
-  - Doesn't complete any missions, so you could theoretically play the story from level 1 in UVHM difficulty which isn't otherwise possible.
+- **Unlock UVHM & post-game activities**
+  - Sets values in the save to unlock Ultimate Vault Hunter rank 1-5. You can switch between them in-game.
+  - Completes the post-game tutorial mission which unlocks the **firmware system**, **Maurice's Black Market**, and **Moxxi's Big Encore**
+  - Doesn't complete any other missions, so you could theoretically play the story from level 1 in UVHM difficulty which isn't otherwise possible.
   - Loading a save with this & story completion will enable starting at level 30 (flag is automatically added to `profile.sav`).
   - Completes all UVH challenges.
 
-### Profile Presets `profile.sav`
-- **Unlock new game shortcuts**
+### Misc
+- **Apply all presets**
+  - Applies all character presets - does not include the below "profile" presets which use a different save file.
+  - Grants maximum money & eridium.
+- **Add item serials to backpack/bank**
+  - Adds a user-provided list of serials into a character or profile save.
+- **Set all backpack items to character level**
+  - Updates all item serials in character inventory to match the level of the character.
+- **Set all bank items to max level**  `profile.sav`
+  - Updates all item serials in bank to have max level (50).
+- **Unlock new game shortcuts**  `profile.sav`
   - Enables starting new characters at level 30 with story already complete.
   - Enables the specialization system.
-- **Unlock all cosmetics**
+- **Unlock all cosmetics**  `profile.sav`
   - Unlocks all cosmetic items, making them available to all characters.
 
 ## Where Are My Saves?
@@ -128,5 +150,6 @@ Please reach out on Discord if you'd like to discuss this project! (link in prof
 - Decryption functionality largely based on https://github.com/glacierpiece/borderlands-4-save-utility
 - Epic ID key derivation based on https://github.com/mi5hmash/Borderlands4SaveDataResigner
 - Examples of 100% saves from Bytelocker ([Nexus Mods page](https://www.nexusmods.com/borderlands4/mods/84))
-- [RegularLunar](https://github.com/RegularLunar) for specializations presets
+- [RegularLunar](https://github.com/RegularLunar) for various features and enhancements.
+- Item serial research via [Nicnl & co.](https://github.com/Nicnl/borderlands4-serials)
 - This project was made possible through much coaching by LLM tools. I'm an amateur programmer.

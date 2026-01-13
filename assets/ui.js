@@ -9,6 +9,9 @@
  * - Character class selection UI
  */
 
+// Defines maximum character level globally. Used in other files.
+let MAX_LEVEL = 50;
+
 /**
  * Defines available preset modifications for save files.
  * Each preset contains:
@@ -21,23 +24,23 @@
  */
 const PRESETS = [
   {
-    handler: 'unlockMaxEverything',
-    title: 'Unlock / Max Everything',
-    desc: 'Runs a sequence to unlock and max progression, collectibles, SDU, and challenges.',
+    handler: 'showChangeClassPopup',
+    title: `Change Character Class`,
+    desc: `Changes character class (select from list).`,
     saveType: 'character',
-    group: 'Misc',
+    group: 'Character',
   },
   {
     handler: 'setCharacterToMaxLevel',
-    title: 'Max Level (50)',
-    desc: 'Sets character level to 50.',
+    title: `Max Level (${MAX_LEVEL})`,
+    desc: `Sets character level to the maximum (${MAX_LEVEL}).`,
     saveType: 'character',
     group: 'Character',
   },
   {
     handler: 'setMaxSDU',
     title: 'Max SDU',
-    desc: 'Sets SDU/echo token progress points to a high value to unlock SDU upgrades.',
+    desc: 'Purchases all SDU upgrades, granting additional Echo tokens as needed.',
     saveType: 'character',
     group: 'Character',
   },
@@ -91,6 +94,20 @@ const PRESETS = [
     group: 'Character',
   },
   {
+    handler: 'completeAllChallenges',
+    title: 'Complete All Challenges',
+    desc: "Completes all challenges (doesn't grant rewards).",
+    saveType: 'character',
+    group: 'World',
+  },
+  {
+    handler: 'completeAllAchievements',
+    title: 'Complete All Achievements',
+    desc: 'Completes all achievements.',
+    saveType: 'character',
+    group: 'World',
+  },
+  {
     handler: 'completeAllStoryMissions',
     title: 'Skip Story Missions',
     desc: 'Completes all main story missions.',
@@ -100,23 +117,37 @@ const PRESETS = [
   {
     handler: 'completeAllMissions',
     title: 'Skip All Missions',
-    desc: 'Completes all main and side missions.',
+    desc: 'Completes all main and side missions (including activities).',
     saveType: 'character',
     group: 'World',
   },
   {
-    handler: 'unlockUVHMode',
-    title: 'Unlock UVHM',
-    desc: 'Sets flags to unlock UVH mode.',
+    handler: 'unlockPostgame',
+    title: 'Unlock UVHM / Postgame',
+    desc: 'Sets flags to unlock UVH mode and post-game activities.',
     saveType: 'character',
     group: 'Character',
   },
   {
-    handler: 'completeAllChallenges',
-    title: 'Complete All Challenges',
-    desc: 'Completes all challenges.',
+    handler: 'unlockMaxEverything',
+    title: 'Unlock / Max Everything',
+    desc: 'Runs a sequence of presets to unlock and max progression, collectibles, SDU, and challenges.',
     saveType: 'character',
-    group: 'World',
+    group: 'Misc',
+  },
+  {
+    handler: 'updateAllSerialLevels',
+    title: 'Set All Items to Character Level',
+    desc: 'Updates serials for all backpack items to match current character level.',
+    saveType: 'character',
+    group: 'Misc',
+  },
+  {
+    handler: 'showAddItemsPopup',
+    title: 'Add Item Serials to Backpack',
+    desc: 'Adds user-provided item serials to backpack.',
+    saveType: 'character',
+    group: 'Misc',
   },
   {
     handler: 'unlockNewGameShortcuts',
@@ -171,40 +202,60 @@ function renderPresets() {
     const grid = document.createElement('div');
     grid.className = 'preset-grid';
 
-    // If Character group, insert class change buttons first
-    if (groupName === 'Character') {
-      makeCharacterClassButtons().forEach((btnRow) => grid.appendChild(btnRow));
-    }
+    PRESETS.filter((p) => (p.group || 'Misc') === groupName).forEach((preset) => {
+      const row = document.createElement('div');
+      row.className = 'preset-row';
 
-    PRESETS.filter((p) => (p.group || 'Misc') === groupName).forEach(
-      (preset) => {
-        const row = document.createElement('div');
-        row.className = 'preset-row';
+      const btn = document.createElement('button');
+      btn.className = 'secondary';
+      btn.style.position = 'relative';
 
-        const btn = document.createElement('button');
-        btn.className = 'secondary';
-        btn.textContent = preset.title;
-        btn.style.position = 'relative';
+      // Compute display metadata without mutating PRESETS
+      const display = {
+        title: preset.title,
+        desc: preset.desc,
+        saveType: preset.saveType,
+      };
 
-        if (
-          (isProfileSave && preset.saveType === 'character') ||
-          (!isProfileSave && preset.saveType === 'profile')
-        ) {
-          btn.disabled = true;
-          btn.title = isProfileSave
-            ? 'This preset only applies to character saves.'
-            : 'This preset only applies to profile saves.';
-        } else {
-          btn.onclick = function () {
+      // Special-case: these presets also work in profile saves, but should be displayed differently in that case
+      if (preset.handler === 'updateAllSerialLevels' && isProfileSave) {
+        display.title = `Set All Bank Items to Max Level (${MAX_LEVEL})`;
+        display.desc = `Updates serials for all bank items to have max level (${MAX_LEVEL}).`;
+        display.saveType = 'profile';
+      }
+      if (preset.handler === 'showAddItemsPopup' && isProfileSave) {
+        display.title = `Add Item Serials to Bank`;
+        display.desc = `Adds user-provided item serials to bank.`;
+        display.saveType = 'profile';
+      }
+
+      btn.textContent = display.title;
+
+      // Determine disabled state based on computed saveType (no mutation)
+      if (
+        (isProfileSave && display.saveType === 'character') ||
+        (!isProfileSave && display.saveType === 'profile')
+      ) {
+        btn.disabled = true;
+        btn.title = isProfileSave
+          ? 'This preset only applies to character saves.'
+          : 'This preset only applies to profile saves.';
+      } else {
+        btn.title = display.desc;
+        btn.onclick = function () {
+          // call handler by name if present
+          if (typeof window[preset.handler] === 'function') {
             window[preset.handler]();
             btn.classList.add('preset-applied');
-          };
-        }
-
-        row.appendChild(btn);
-        grid.appendChild(row);
+          } else {
+            console.warn(`Handler not found: ${preset.handler}`);
+          }
+        };
       }
-    );
+
+      row.appendChild(btn);
+      grid.appendChild(row);
+    });
 
     groupDiv.appendChild(grid);
     presetSection.appendChild(groupDiv);
@@ -256,7 +307,7 @@ async function importFile() {
   // Exit early if YAML file provided (already decrypted)
   const ext = file.name.split('.').pop().toLowerCase();
   if (ext == 'yaml' || ext == 'yml') {
-    console.log('Loading YAML file directly into editor');
+    console.info('Loading YAML file directly into editor');
     yamlText = normalizeYaml(arrayBuffer);
   } else {
     yamlText = decryptSav(arrayBuffer);
@@ -271,8 +322,8 @@ function normalizeYaml(yamlBytes) {
     yamlBytes = new Uint8Array(yamlBytes);
   }
   let yamlText = new TextDecoder().decode(yamlBytes);
-  console.log('YAML preview:', yamlText.slice(0, 100));
-  console.log('YAML length:', yamlBytes.length);
+  console.debug('YAML preview:', yamlText.slice(0, 100));
+  console.debug('YAML length:', yamlBytes.length);
 
   // Remove !tags which jsyaml can't handle. These don't seem to be needed.
   yamlText = yamlText.replace(/:\s*!tags/g, ':');
@@ -332,19 +383,17 @@ window.addEventListener('DOMContentLoaded', function () {
 });
 
 // Clear editor when selecting a new file, and try to import if userIdInput is set
-document
-  .getElementById('fileInput')
-  .addEventListener('change', async function () {
-    if (editor) editor.setValue('');
-    const userId = document.getElementById('userIdInput')?.value;
-    if (userId) {
-      try {
-        await importFile();
-      } catch (e) {
-        console.log('opportunistic import failed:', e);
-      }
+document.getElementById('fileInput').addEventListener('change', async function () {
+  if (editor) editor.setValue('');
+  const userId = document.getElementById('userIdInput')?.value;
+  if (userId) {
+    try {
+      await importFile();
+    } catch (e) {
+      console.error('opportunistic import failed:', e);
     }
-  });
+  }
+});
 
 let isProfileSave = false;
 
@@ -362,6 +411,72 @@ function clearPresetApplied() {
   document.querySelectorAll('.preset-applied').forEach((btn) => {
     btn.classList.remove('preset-applied');
   });
+}
+
+/**
+ * Show a modal popup to insert item serials.
+ */
+function showAddItemsPopup() {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+
+  const header = document.createElement('div');
+  header.className = 'preset-group-header';
+  header.textContent = 'Add Item Serials';
+  modal.appendChild(header);
+
+  const desc = document.createElement('p');
+  desc.className = 'modal-desc';
+  desc.textContent = 'Enter the item serials you wish to add - one per line.';
+  modal.appendChild(desc);
+
+  const textarea = document.createElement('textarea');
+  textarea.value = '';
+  textarea.className = 'modal-textarea';
+  modal.appendChild(textarea);
+
+  const btnRow = document.createElement('div');
+  btnRow.className = 'modal-btn-row';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'secondary';
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.onclick = close;
+
+  const confirmBtn = document.createElement('button');
+  confirmBtn.textContent = 'Confirm';
+  confirmBtn.onclick = function () {
+    const raw = textarea.value || '';
+    const serials = raw
+      .split(/[\r\n]+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+    try {
+      if (typeof insertSerials === 'function') insertSerials(serials);
+    } finally {
+      close();
+    }
+  };
+
+  btnRow.appendChild(cancelBtn);
+  btnRow.appendChild(confirmBtn);
+  modal.appendChild(btnRow);
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+
+  function close() {
+    if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    document.removeEventListener('keydown', onKey);
+  }
+
+  function onKey(e) {
+    if (e.key === 'Escape') close();
+  }
+  document.addEventListener('keydown', onKey);
 }
 
 const CHARACTER_CLASSES = {
@@ -383,31 +498,82 @@ const CHARACTER_CLASSES = {
   },
 };
 
-function makeCharacterClassButtons() {
-  let classPresets = [];
-  for (const [key, value] of Object.entries(CHARACTER_CLASSES)) {
-    const row = document.createElement('div');
-    row.className = 'preset-row';
-
-    const btn = document.createElement('button');
-    btn.className = 'secondary';
-    btn.textContent = `Change Class to ${value.class}`;
-    btn.title = value.name;
-    btn.style.position = 'relative';
-
-    if (isProfileSave) {
-      btn.disabled = true;
-      btn.title = 'This preset only applies to character saves.';
-    }
-
-    btn.onclick = function () {
-      setCharacterClass(key, value.name);
-      btn.classList.add('preset-applied');
-    };
-
-    row.appendChild(btn);
-    classPresets.push(row);
+/**
+ * Show a modal popup to choose a character class from the set defined in CHARACTER_CLASSES.
+ * Calls setCharacterClass(key, name) on confirm. Cancel closes the modal.
+ */
+function showChangeClassPopup() {
+  if (isProfileSave) {
+    alert('This action only applies to character saves.');
+    return;
   }
 
-  return classPresets;
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+
+  const header = document.createElement('div');
+  header.className = 'preset-group-header';
+  header.textContent = 'Change Character Class';
+  modal.appendChild(header);
+
+  const desc = document.createElement('p');
+  desc.className = 'modal-desc';
+  desc.textContent = 'Select the class you want to change to:';
+  modal.appendChild(desc);
+
+  const select = document.createElement('select');
+  select.className = 'modal-select';
+  select.style.width = '100%';
+  select.style.marginBottom = '12px';
+
+  // Populate options from CHARACTER_CLASSES
+  for (const [key, info] of Object.entries(CHARACTER_CLASSES)) {
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = `${info.class} (${info.name})`;
+    select.appendChild(opt);
+  }
+  modal.appendChild(select);
+
+  const btnRow = document.createElement('div');
+  btnRow.className = 'modal-btn-row';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'secondary';
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.onclick = close;
+
+  const confirmBtn = document.createElement('button');
+  confirmBtn.textContent = 'Confirm';
+  confirmBtn.onclick = function () {
+    const key = select.value;
+    if (!key || !CHARACTER_CLASSES[key]) {
+      alert('No class selected.');
+      return;
+    }
+    setCharacterClass(key, CHARACTER_CLASSES[key].name);
+    close();
+  };
+
+  btnRow.appendChild(cancelBtn);
+  btnRow.appendChild(confirmBtn);
+  modal.appendChild(btnRow);
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+
+  function close() {
+    if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    document.removeEventListener('keydown', onKey);
+  }
+  function onKey(e) {
+    if (e.key === 'Escape') close();
+  }
+  document.addEventListener('keydown', onKey);
+
+  // focus select for quick keyboard use
+  select.focus();
 }

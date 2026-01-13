@@ -50,12 +50,38 @@ def sort_dict(obj):
     else:
         return obj
 
+def merge_lists(old_list, new_list):
+    if all(isinstance(x, str) for x in old_list + new_list):
+        mapping = {}
+        # keep old entry if theres a casing difference.
+        # the game doesnt actually care, so it's probably best to reduce unnecessary updates.
+        for x in old_list:
+            mapping[x.lower()] = x
+        for x in new_list:
+            lk = x.lower()
+            if lk not in mapping:
+                mapping[lk] = x
+        merged = list(mapping.values())
+        merged.sort(key=lambda x: x.lower())
+        return merged
+    else:
+        # Fallback: keep unique items (preserve order from existing then new)
+        merged = list(old_list)
+        for item in new_list:
+            if not any(item == existing_item for existing_item in merged):
+                merged.append(item)
+        try:
+            merged = sorted(merged, key=lambda x: str(x).lower())
+        except Exception:
+            pass
+        return merged
+
 def merge_yaml(existing, new):
     """
     Recursively merge new into existing:
     - Add new keys/values.
     - If value is a dict, recurse.
-    - If value is a list, add new items (no duplicates) and sort.
+    - If value is a list, add new items (no duplicates, ignoring capitalization) and sort.
     - If value is a scalar, update only if not a dict/list.
     """
     for key, new_val in new.items():
@@ -64,14 +90,7 @@ def merge_yaml(existing, new):
             if isinstance(old_val, dict) and isinstance(new_val, dict):
                 merge_yaml(old_val, new_val)
             elif isinstance(old_val, list) and isinstance(new_val, list):
-                # Merge, deduplicate, and sort
-                merged = list(set(old_val) | set(new_val))
-                # If all elements are strings, sort as strings
-                if all(isinstance(x, str) for x in merged):
-                    merged.sort(key=lambda x: x.lower())
-                else:
-                    merged.sort()
-                existing[key] = merged
+                existing[key] = merge_lists(old_val, new_val)
             elif not isinstance(old_val, (dict, list)):
                 # Only update if not an object/array
                 existing[key] = new_val

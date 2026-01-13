@@ -18,6 +18,7 @@ function completeAllChallenges() {
   completeEquipmentChallenges();
   completeManufacturerChallenges();
   completeLicensedPartsChallenges();
+  completePhospheneChallenges();
 }
 
 function completeUVHChallenges() {
@@ -40,6 +41,7 @@ function completeUVHChallenges() {
     mission_uvh_5a: 1,
     mission_uvh_5b: 1,
     mission_uvh_5c: 1,
+    mission_uvh_6a: 1,
     uvh_1_finalchallenge: 1,
     uvh_2_finalchallenge: 1,
     uvh_3_finalchallenge: 1,
@@ -366,6 +368,151 @@ function completeLicensedPartsChallenges() {
   };
 
   updateStatsCounters(counters);
+}
+
+function completePhospheneChallenges() {
+  const counters = {
+    base: {
+      shiny_anarchy: 1,
+      shiny_asher: 1,
+      shiny_atlien: 1,
+      shiny_ballista: 1,
+      shiny_beegun: 1,
+      shiny_bloodstarved: 1,
+      shiny_bod: 1,
+      shiny_bonnieclyde: 1,
+      shiny_boomslang: 1,
+      shiny_bugbear: 1,
+      shiny_bully: 1,
+      shiny_chuck: 1,
+      shiny_coldshoulder: 1,
+      shiny_commbd: 1,
+      shiny_complex_root: 1,
+      shiny_convergence: 1,
+      shiny_crowdsourced: 1,
+      shiny_dividedfocus: 1,
+      shiny_dualdamage: 1,
+      shiny_finnty: 1,
+      shiny_fisheye: 1,
+      shiny_gmr: 1,
+      shiny_goalkeeper: 1,
+      shiny_goldengod: 1,
+      shiny_goremaster: 1,
+      shiny_heartgun: 1,
+      shiny_heavyturret: 1,
+      shiny_hellfire: 1,
+      shiny_hellwalker: 1,
+      shiny_kaleidosplode: 1,
+      shiny_kaoson: 1,
+      shiny_katagawa: 1,
+      shiny_kickballer: 1,
+      shiny_kingsgambit: 1,
+      shiny_leadballoon: 1,
+      shiny_linebacker: 1,
+      shiny_lucian: 1,
+      shiny_lumberjack: 1,
+      shiny_luty: 1,
+      shiny_noisycricket: 1,
+      shiny_ohmigot: 1,
+      shiny_om: 1,
+      shiny_onslaught: 1,
+      shiny_phantom_flame: 1,
+      shiny_plasmacoil: 1,
+      shiny_potatothrower: 1,
+      shiny_prince: 1,
+      shiny_queensrest: 1,
+      shiny_quickdraw: 1,
+      shiny_rainbowvomit: 1,
+      shiny_rangefinder: 1,
+      shiny_roach: 1,
+      shiny_rocketreload: 1,
+      shiny_rowan: 1,
+      shiny_rubysgrasp: 1,
+      shiny_seventh_sense: 1,
+      shiny_sideshow: 1,
+      shiny_slugger: 1,
+      shiny_star_helix: 1,
+      shiny_stopgap: 1,
+      shiny_stray: 1,
+      shiny_sweet_embrace: 1,
+      shiny_symmetry: 1,
+      shiny_tkswave: 1,
+      shiny_truck: 1,
+      shiny_vamoose: 1,
+      shiny_wf: 1,
+      shiny_wombocombo: 1,
+      shiny_zipgun: 1,
+    },
+  };
+
+  updateStatsCounters(counters, 'shinygear');
+}
+
+/**
+ * Sets all achievement counter values to completed.
+ * Unknown how effective this is for actually unlocking achievements.
+ * Activity completion achievement is not controlled by a counter.
+ */
+function completeAllAchievements() {
+  const counters = {
+    '00_level_10': 1,
+    '01_level_30': 1,
+    '02_level_50': 1,
+    '03_uvh_5': 1,
+    '04_cosmetics_collect': 60,
+    '05_vehicles_collect': 10,
+    '06_legendaries_equip': 1,
+    '07_challenges_gear': 1,
+    '08_challenges_manufacturer': 1,
+    // complete all activities achievement doesnt seem to have a counter - it just checks completed activity missions
+    '10_worldevents_colosseum': 1,
+    '11_worldevents_airship': 1,
+    '12_worldevents_meteor': 1,
+    '13_contracts_complete': 80,
+    '14_discovery_grasslands': 54,
+    '15_discovery_mountains': 62,
+    '16_discovery_shatteredlands': 47,
+    '17_discovery_city': 21,
+    '18_worldboss_defeat': 1,
+    '19_vaultguardian_defeat': {
+      '19_vaultguardian_grasslands': 1,
+      '19_vaultguardian_mountains': 1,
+      '19_vaultguardian_shatteredlands': 1,
+    },
+    '20_missions_survivalist': 3,
+    '21_missions_auger': 7,
+    '22_missions_electi': 3,
+    '23_missions_claptrap': 5,
+    '24_missions_side': 98,
+    '25_missions_grasslands': 1,
+    '26_missions_mountains': 1,
+    '27_missions_shatteredlands': 1,
+    '28_missions_elpis': 1,
+    '29_missions_main': 1,
+    '30_moxxi_hidden': 1,
+    '31_tannis_hidden': 1,
+    '32_zane_hidden': 1,
+    '33_oddman_hidden': 1,
+    '34_dave_hidden': 1,
+  };
+
+  updateStatsCounters(counters, 'achievements');
+  if (typeof mergeMissionsetsWithPrefix === 'function')
+    mergeMissionsetsWithPrefix('missionset_zoneactivity_');
+}
+
+/**
+ * Sets location discovery achievement counter values to completed.
+ */
+function completeDiscoveryAchievements() {
+  const counters = {
+    '14_discovery_grasslands': 54,
+    '15_discovery_mountains': 62,
+    '16_discovery_shatteredlands': 47,
+    '17_discovery_city': 21,
+  };
+
+  updateStatsCounters(counters, 'achievements');
 }
 
 /**

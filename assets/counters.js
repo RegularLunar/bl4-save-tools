@@ -26,14 +26,9 @@ function completeAllCollectibles() {
   // For each top-level key in the template,
   // add/overwrite child keys individually to avoid removing unexpected keys.
   for (const [category, values] of Object.entries(COLLECTIBLES)) {
-    data.stats.openworld.collectibles[category] =
-      data.stats.openworld.collectibles[category] || {};
+    data.stats.openworld.collectibles[category] = data.stats.openworld.collectibles[category] || {};
     // If the value is an object, copy keys individually
-    if (
-      typeof values === 'object' &&
-      values !== null &&
-      !Array.isArray(values)
-    ) {
+    if (typeof values === 'object' && values !== null && !Array.isArray(values)) {
       for (const [k, v] of Object.entries(values)) {
         // If nested object (e.g., echologs_general), handle one more level
         if (typeof v === 'object' && v !== null && !Array.isArray(v)) {
@@ -62,6 +57,30 @@ function completeAllCollectibles() {
 }
 
 /**
+ * Opens all vault doors, removing their "search" circles from the map.
+ */
+function openAllVaultDoors() {
+  const data = getYamlDataFromEditor();
+  if (!data) return;
+
+  data.stats = data.stats || {};
+  data.stats.openworld = data.stats.openworld || {};
+  data.stats.openworld.collectibles = data.stats.openworld.collectibles || {};
+
+  for (const category of ['vaultdoor', 'vaultlock']) {
+    if (typeof COLLECTIBLES !== 'object' || typeof COLLECTIBLES[category] !== 'object') {
+      console.error('unable to open vault doors - COLLECTIBLES data missing or invalid');
+      continue;
+    }
+    data.stats.openworld.collectibles[category] = COLLECTIBLES[category];
+  }
+
+  const newYaml = jsyaml.dump(data, { lineWidth: -1, noRefs: true });
+  editor.setValue(newYaml);
+  console.info('All vault doors opened!');
+}
+
+/**
  * Unlocks all Vault Powers across all areas.
  * Sets the vault power flags for:
  * - Grasslands
@@ -84,19 +103,19 @@ function unlockVaultPowers() {
   editor.setValue(newYaml);
 }
 
-function unlockUVHMode() {
+function unlockPostgame() {
   const data = getYamlDataFromEditor();
   if (!data) return;
 
   data.globals = data.globals || {};
-  data.globals.highest_unlocked_vault_hunter_level = 5;
+  data.globals.highest_unlocked_vault_hunter_level = 6;
   data.globals.vault_hunter_level = 1;
 
-  completeUVHChallenges();
-
-  // Update editor
   const newYaml = jsyaml.dump(data, { lineWidth: -1, noRefs: true });
   editor.setValue(newYaml);
+
+  if (typeof completeUVHChallenges === 'function') completeUVHChallenges();
+  if (typeof mergeMissionsetsWithPrefix === 'function') mergeMissionsetsWithPrefix('missionset_main_postgame');
 }
 
 /**
@@ -119,8 +138,7 @@ function setStoryValues() {
 
   // Set unlockables.character_progress.entries (append if not present) - not sure what this does
   data.unlockables = data.unlockables || {};
-  data.unlockables.character_progress =
-    data.unlockables.character_progress || {};
+  data.unlockables.character_progress = data.unlockables.character_progress || {};
   let entries = data.unlockables.character_progress.entries || [];
   if (!entries.includes('character_progress.seen_credits')) {
     entries.push('character_progress.seen_credits');

@@ -24,7 +24,12 @@ unlockable_darksiren:
   - Unlockable_DarkSiren.Head14_Thresher
   - Unlockable_DarkSiren.Head15_CrimeLord
   - Unlockable_DarkSiren.Head16_Premium
+  - Unlockable_DarkSiren.Head18_Pumpkin
+  - Unlockable_DarkSiren.Head21_Reindeeer
   - Unlockable_DarkSiren.Head23_CrashTestDummy
+  - Unlockable_DarkSiren.Head26_Giftbox
+  - Unlockable_DarkSiren.Head27_Nutcracker
+  - Unlockable_DarkSiren.Head28_Krampus
   - Unlockable_DarkSiren.Skin01_Prison
   - Unlockable_DarkSiren.Skin02_Order
   - Unlockable_DarkSiren.Skin03_Ghost
@@ -67,21 +72,33 @@ unlockable_darksiren:
   - Unlockable_DarkSiren.Skin40_Veil
   - Unlockable_DarkSiren.Skin44_Premium
   - Unlockable_DarkSiren.Skin45_BreakFree
+  - Unlockable_DarkSiren.skin46_ripwrappings
+  - Unlockable_DarkSiren.skin47_hanginglights
+  - Unlockable_DarkSiren.skin48_krampusclaus
+  - Unlockable_DarkSiren.skin49_midcentury
+  - Unlockable_DarkSiren.Skin51_LoreUnique
+  - Unlockable_DarkSiren.Skin52_Altas
+  - Unlockable_DarkSiren.Skin53_Hyperion
+  - Unlockable_DarkSiren.skin54_nightsky
+  - Unlockable_DarkSiren.Skin55_Blizzard
+  - Unlockable_DarkSiren.Skin56_COV
 unlockable_echo4:
   entries:
-  - Unlockable_Echo4.attachment01_partyhat
+  - Unlockable_Echo4.Attachment01_PartyHat
   - Unlockable_Echo4.attachment02_bow
-  - Unlockable_Echo4.attachment03_bolt
+  - Unlockable_Echo4.Attachment03_Bolt
   - Unlockable_Echo4.attachment04_wings
   - Unlockable_Echo4.attachment05_skull
-  - Unlockable_Echo4.attachment06_crystalhorn
+  - Unlockable_Echo4.Attachment06_CrystalHorn
   - Unlockable_Echo4.attachment07_horns
-  - Unlockable_Echo4.attachment08_tinfoilhat
+  - Unlockable_Echo4.Attachment08_TinfoilHat
   - Unlockable_Echo4.attachment09_goggles
   - Unlockable_Echo4.attachment10_crown
   - Unlockable_Echo4.attachment11_mohawk
   - Unlockable_Echo4.attachment12_psychomask
   - Unlockable_Echo4.attachment13_fishinghat
+  - Unlockable_Echo4.attachment14_santahat
+  - Unlockable_Echo4.attachment15_neonstar
   - Unlockable_Echo4.Body01_GeneVIV
   - Unlockable_Echo4.body02_order
   - Unlockable_Echo4.Body03_Ripper
@@ -129,7 +146,13 @@ unlockable_echo4:
   - Unlockable_Echo4.Skin42_Legacy
   - Unlockable_Echo4.Skin43_Twitch
   - Unlockable_Echo4.Skin45_BreakFree
+  - Unlockable_Echo4.skin46_ripwrappings
+  - Unlockable_Echo4.skin47_hanginglights
+  - Unlockable_Echo4.skin48_krampusclaus
+  - Unlockable_Echo4.skin49_midcentury
   - Unlockable_Echo4.Skin50_BreakTheGame
+  - Unlockable_Echo4.skin54_nightsky
+  - Unlockable_Echo4.Skin55_Blizzard
 unlockable_exosoldier:
   entries:
   - Unlockable_ExoSoldier.Body01_Prison
@@ -150,7 +173,12 @@ unlockable_exosoldier:
   - Unlockable_ExoSoldier.Head14_Thresher
   - Unlockable_ExoSoldier.Head15_CrimeLord
   - Unlockable_ExoSoldier.Head16_Premium
+  - Unlockable_ExoSoldier.Head18_Pumpkin
+  - Unlockable_ExoSoldier.Head21_Reindeeer
   - Unlockable_ExoSoldier.Head23_CrushTestDummy
+  - Unlockable_ExoSoldier.Head26_Giftbox
+  - Unlockable_ExoSoldier.Head27_Nutcracker
+  - Unlockable_ExoSoldier.Head28_Krampus
   - Unlockable_ExoSoldier.Skin01_Prison
   - Unlockable_ExoSoldier.Skin02_Order
   - Unlockable_ExoSoldier.Skin03_Ghost
@@ -193,7 +221,16 @@ unlockable_exosoldier:
   - Unlockable_ExoSoldier.Skin40_Veil
   - Unlockable_ExoSoldier.Skin44_Premium
   - Unlockable_ExoSoldier.Skin45_BreakFree
+  - Unlockable_ExoSoldier.skin46_ripwrappings
+  - Unlockable_ExoSoldier.skin47_hanginglights
+  - Unlockable_ExoSoldier.skin48_krampusclaus
+  - Unlockable_ExoSoldier.skin49_midcentury
   - Unlockable_ExoSoldier.Skin51_LoreUnique
+  - Unlockable_ExoSoldier.Skin52_Altas
+  - Unlockable_ExoSoldier.Skin53_Hyperion
+  - Unlockable_ExoSoldier.skin54_nightsky
+  - Unlockable_ExoSoldier.Skin55_Blizzard
+  - Unlockable_ExoSoldier.Skin56_COV
 unlockable_gravitar:
   entries:
   - Unlockable_Gravitar.Body01_Prison
@@ -214,8 +251,12 @@ unlockable_gravitar:
   - Unlockable_Gravitar.Head14_Thresher
   - Unlockable_Gravitar.Head15_CrimeLord
   - Unlockable_Gravitar.Head16_Premium
-  - Unlockable_Gravitar.Head23_CrushTestDum
+  - Unlockable_Gravitar.Head18_Pumpkin
+  - Unlockable_Gravitar.Head21_Reindeeer
   - Unlockable_Gravitar.Head23_CrushTestDummy
+  - Unlockable_Gravitar.Head26_Giftbox
+  - Unlockable_Gravitar.Head27_Nutcracker
+  - Unlockable_Gravitar.Head28_Krampus
   - Unlockable_Gravitar.Skin01_Prison
   - Unlockable_Gravitar.Skin02_Order
   - Unlockable_Gravitar.Skin03_Ghost
@@ -258,6 +299,16 @@ unlockable_gravitar:
   - Unlockable_Gravitar.Skin40_Veil
   - Unlockable_Gravitar.Skin44_Premium
   - Unlockable_Gravitar.Skin45_BreakFree
+  - Unlockable_Gravitar.skin46_ripwrappings
+  - Unlockable_Gravitar.skin47_hanginglights
+  - Unlockable_Gravitar.skin48_krampusclaus
+  - Unlockable_Gravitar.skin49_midcentury
+  - Unlockable_Gravitar.Skin51_LoreUnique
+  - Unlockable_Gravitar.Skin52_Altas
+  - Unlockable_Gravitar.Skin53_Hyperion
+  - Unlockable_Gravitar.skin54_nightsky
+  - Unlockable_Gravitar.Skin55_Blizzard
+  - Unlockable_Gravitar.Skin56_COV
 unlockable_paladin:
   entries:
   - Unlockable_Paladin.Body01_Prison
@@ -278,7 +329,12 @@ unlockable_paladin:
   - Unlockable_Paladin.Head14_Thresher
   - Unlockable_Paladin.Head15_CrimeLord
   - Unlockable_Paladin.Head16_Premium
+  - Unlockable_Paladin.Head18_Pumpkin
+  - Unlockable_Paladin.Head21_Reindeeer
   - Unlockable_Paladin.Head23_CrushTestDummy
+  - Unlockable_Paladin.Head26_Giftbox
+  - Unlockable_Paladin.Head27_Nutcracker
+  - Unlockable_Paladin.Head28_Krampus
   - Unlockable_Paladin.Skin01_Prison
   - Unlockable_Paladin.Skin02_Order
   - Unlockable_Paladin.Skin03_Ghost
@@ -321,6 +377,16 @@ unlockable_paladin:
   - Unlockable_Paladin.Skin40_Veil
   - Unlockable_Paladin.Skin44_Premium
   - Unlockable_Paladin.Skin45_BreakFree
+  - Unlockable_Paladin.skin46_ripwrappings
+  - Unlockable_Paladin.skin47_hanginglights
+  - Unlockable_Paladin.skin48_krampusclaus
+  - Unlockable_Paladin.skin49_midcentury
+  - Unlockable_Paladin.Skin51_LoreUnique
+  - Unlockable_Paladin.Skin52_Altas
+  - Unlockable_Paladin.Skin53_Hyperion
+  - Unlockable_Paladin.skin54_nightsky
+  - Unlockable_Paladin.Skin55_Blizzard
+  - Unlockable_Paladin.Skin56_COV
 unlockable_vehicles:
   entries:
   - Unlockable_Vehicles.Borg
@@ -366,12 +432,12 @@ unlockable_vehicles:
   - Unlockable_Vehicles.Mat33_Creepy
   - Unlockable_Vehicles.Mat34_MoneyCamo
   - Unlockable_Vehicles.Mat35_GearboxDev
-  - Unlockable_Vehicles.mat40_animemech
+  - Unlockable_Vehicles.Mat40_AnimeMech
   - Unlockable_Vehicles.mat41_synthesizer
-  - Unlockable_Vehicles.mat42_gratata
-  - Unlockable_Vehicles.mat43_nitroflame
+  - Unlockable_Vehicles.Mat42_Gratata
+  - Unlockable_Vehicles.Mat43_NitroFlame
   - Unlockable_Vehicles.mat44_hotrod
-  - Unlockable_Vehicles.mat45_ripperuncommon
+  - Unlockable_Vehicles.Mat45_RipperUncommon
   - Unlockable_Vehicles.mat46_daedalusuncommon
   - Unlockable_Vehicles.mat47_jakobsuncommon
   - Unlockable_Vehicles.mat48_maliwanuncommon
@@ -379,8 +445,14 @@ unlockable_vehicles:
   - Unlockable_Vehicles.mat50_tedioreuncommon
   - Unlockable_Vehicles.mat51_torgueuncommon
   - Unlockable_Vehicles.mat52_vladofuncommon
+  - Unlockable_Vehicles.Mat53_MissileToe
+  - Unlockable_Vehicles.Mat54_CandyCaned
+  - Unlockable_Vehicles.Mat55_ThatsWrap
+  - Unlockable_Vehicles.Mat56_KrampStyle
+  - Unlockable_Vehicles.Mat57_FrostyReception
   - Unlockable_Vehicles.Paladin
   - Unlockable_Vehicles.Paladin_Proto
+  - Unlockable_Vehicles.ShatterlandV1
 unlockable_weapons:
   entries:
   - Unlockable_Weapons.Mat01_Synthwave
@@ -422,6 +494,12 @@ unlockable_weapons:
   - Unlockable_Weapons.Mat37_SHiFT
   - Unlockable_Weapons.Mat38_HeadHunter
   - Unlockable_Weapons.Mat39_Premium
+  - Unlockable_Weapons.Mat40_Halloween
+  - Unlockable_Weapons.Mat41_StarryNight
+  - Unlockable_Weapons.Mat42_UglyXmasSweater
+  - Unlockable_Weapons.Mat43_Snowfall
+  - Unlockable_Weapons.Mat44_GiftWrap
+  - Unlockable_Weapons.Mat45_Gingerbread
   - Unlockable_Weapons.shiny_anarchy
   - Unlockable_Weapons.shiny_asher
   - Unlockable_Weapons.shiny_atlien
@@ -463,6 +541,7 @@ unlockable_weapons:
   - Unlockable_Weapons.shiny_lucian
   - Unlockable_Weapons.shiny_lumberjack
   - Unlockable_Weapons.shiny_luty
+  - Unlockable_Weapons.shiny_mantra
   - Unlockable_Weapons.shiny_noisycricket
   - Unlockable_Weapons.shiny_ohmigot
   - Unlockable_Weapons.shiny_om
@@ -474,6 +553,7 @@ unlockable_weapons:
   - Unlockable_Weapons.shiny_queensrest
   - Unlockable_Weapons.shiny_quickdraw
   - Unlockable_Weapons.shiny_rainbowvomit
+  - Unlockable_Weapons.shiny_rainmaker
   - Unlockable_Weapons.shiny_rangefinder
   - Unlockable_Weapons.shiny_roach
   - Unlockable_Weapons.shiny_rocketreload
