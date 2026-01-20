@@ -1,7 +1,21 @@
 #!/usr/bin/env python3
-# Extract locations/rewards from a Borderlands 4 YAML save file
-# Produces a human-readable list and a compressed, base64-encoded string for usage in JavaScript
+"""
+Extract location and reward lists from Borderlands 4 YAML save files.
 
+Extracts discovered locations or unique rewards, merges with existing data,
+and outputs both human-readable text files and compressed strings for JavaScript.
+
+Examples:
+    Extract locations:
+        python extract_lists.py -i ../../1.yaml -o ../data/locations.txt -c
+    
+    Extract rewards:
+        python extract_lists.py -i ../../1.yaml -o ../data/rewards.txt -c -r
+    
+    Extract and update blobs.js:
+        python extract_lists.py -i ../../1.yaml -o ../data/locations.txt -c \
+            -b ../assets/blobs.js --blob-const LOCATIONS_COMPRESSED
+"""
 
 import argparse
 import os
@@ -9,6 +23,12 @@ import yaml
 import re
 import zlib
 import base64
+
+try:
+    from update_blobs import update_blob_constant
+    HAS_UPDATE_BLOBS = True
+except ImportError:
+    HAS_UPDATE_BLOBS = False
 
 
 def unknown_tag(loader, tag_suffix, node):
@@ -19,10 +39,11 @@ def unknown_tag(loader, tag_suffix, node):
     else:
         return loader.construct_scalar(node)
 
+
 yaml.SafeLoader.add_multi_constructor('!', unknown_tag)
 
 
-def extract_and_merge(input_yaml, output_text, compressed_output, extract_func):
+def extract_and_merge(input_yaml, output_text, compressed_output, extract_func, blob_constant=None, blobs_js_path=None):
     with open(input_yaml, 'r', encoding='utf-8') as f:
         data = yaml.safe_load(f)
 
@@ -69,6 +90,10 @@ def extract_and_merge(input_yaml, output_text, compressed_output, extract_func):
 
     print(f"Merged output written to {output_text}")
     print(f"Compressed string written to {compressed_output}")
+    
+    # Optionally update blobs.js
+    if blob_constant and blobs_js_path and HAS_UPDATE_BLOBS:
+        update_blob_constant(blobs_js_path, blob_constant, b64)
 
 
 def extract_locations_from_yaml(data):
@@ -82,11 +107,28 @@ def extract_rewards_from_yaml(data):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Extract discovered locations or unique rewards from a YAML save file, then export as raw and compressed files")
+    parser = argparse.ArgumentParser(
+        description="Extract discovered locations or unique rewards from a YAML save file, then export as raw and compressed files",
+        epilog="""
+Examples:
+  # Extract locations (default)
+  %(prog)s -i ../../saves/1.yaml -o ../data/locations.txt -c
+  
+  # Extract unique rewards
+  %(prog)s -i ../../saves/1.yaml -o ../data/rewards.txt -c -r
+  
+  # Extract and auto-update blobs.js
+  %(prog)s -i ../../saves/1.yaml -o ../data/locations.txt -c \
+      -b ../assets/blobs.js --blob-const LOCATIONS_COMPRESSED
+        """,
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument('-i', '--inputyaml', help='Input YAML file', required=True)
     parser.add_argument('-o', '--outputtext', help='Output entries to txt file. Will merge with existing.', required=True)
     parser.add_argument('-c', '--compressed', help='Output compressed base64 txt file', required=False)
     parser.add_argument('-r', '--rewards', action='store_true', help='Extract unique rewards instead of locations')
+    parser.add_argument('-b', '--blobs-js', help='Path to blobs.js file to update')
+    parser.add_argument('--blob-const', help='Blob constant name (e.g., LOCATIONS_COMPRESSED)')
     args = parser.parse_args()
 
     if args.rewards:
@@ -94,12 +136,16 @@ if __name__ == "__main__":
             args.inputyaml,
             args.outputtext,
             args.compressed,
-            extract_rewards_from_yaml
+            extract_rewards_from_yaml,
+            blob_constant='REWARDS_COMPRESSED' if args.blobs_js else None,
+            blobs_js_path=args.blobs_js
         )
     else:
         extract_and_merge(
             args.inputyaml,
             args.outputtext,
             args.compressed,
-            extract_locations_from_yaml
+            extract_locations_from_yaml,
+            blob_constant='LOCATIONS_COMPRESSED' if args.blobs_js else None,
+            blobs_js_path=args.blobs_js
         )
