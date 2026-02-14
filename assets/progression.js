@@ -318,9 +318,9 @@ function maxAmmo() {
   console.info('Ammo maxed out');
 }
 
-// Runs a best-effort sequence to unlock / max most things in a character save.
+// Runs a best-effort sequence to unlock / max most things in a save file.
 function unlockMaxEverything() {
-  // Call every non-profile mutation function in a reasonable order.
+  // Call every available mutation function in a reasonable order.
 
   try {
     // Ammo & Currency
@@ -330,6 +330,8 @@ function unlockMaxEverything() {
     // Exploration / discovery
     if (typeof clearMapFog === 'function') clearMapFog();
     if (typeof discoverAllLocations === 'function') discoverAllLocations();
+    if (typeof discoverSafehouseLocations === 'function') discoverSafehouseLocations();
+    if (typeof openAllVaultDoors === 'function') openAllVaultDoors();
 
     // Collectibles / counters
     if (typeof completeAllCollectibles === 'function') completeAllCollectibles();
@@ -346,6 +348,8 @@ function unlockMaxEverything() {
     if (typeof unlockPostgame === 'function') unlockPostgame();
     if (typeof unlockAllHoverDrives === 'function') unlockAllHoverDrives();
     if (typeof unlockAllSpecialization === 'function') unlockAllSpecialization();
+    if (typeof unlockAllCosmetics === 'function') unlockAllCosmetics();
+    if (typeof unlockNewGameShortcuts === 'function') unlockNewGameShortcuts();
 
     // Challenges and counters (these are many; the master function calls the grouped helper)
     if (typeof completeAllChallenges === 'function') completeAllChallenges();
