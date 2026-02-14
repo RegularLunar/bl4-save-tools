@@ -80,6 +80,7 @@ function unlockAllCosmetics() {
   // Merge cosmetic unlocks for each key
   Object.keys(UNLOCKABLES).forEach((key) => {
     if (key === 'shared_progress') return; // skip this one - no cosmetics
+    if (key === 'vaultcard_purchases') return; // skip - handled differently
 
     data.domains.local.unlockables[key] = data.domains.local.unlockables[key] || {};
 
@@ -97,6 +98,33 @@ function unlockAllCosmetics() {
   const newYaml = jsyaml.dump(data, { lineWidth: -1, noRefs: true });
   editor.setValue(newYaml);
   console.info('All customizations unlocked!');
+  unlockAllVaultCardPurchases();
+}
+
+/**
+ * Unlocks all vault card purchases in a profile save.
+ * These must be present for cosmetics with the same name to be usable.
+ */
+function unlockAllVaultCardPurchases() {
+  const data = getYamlDataFromEditor();
+  if (!data) return;
+
+  data['oak.ui.dlc_data'] = data['oak.ui.dlc_data'] || {};
+  data['oak.ui.dlc_data'].ui_dlc_data = data['oak.ui.dlc_data'].ui_dlc_data || {};
+
+  let existing = data['oak.ui.dlc_data'].ui_dlc_data.vaultcard_purchases || [];
+  let merged = new Set(existing);
+  for (const entry of UNLOCKABLES['vaultcard_purchases']) {
+    merged.add(entry);
+  }
+
+  data['oak.ui.dlc_data'].ui_dlc_data.vaultcard_purchases = Array.from(merged).sort((a, b) =>
+    a.toLowerCase().localeCompare(b.toLowerCase())
+  );
+
+  const newYaml = jsyaml.dump(data, { lineWidth: -1, noRefs: true });
+  editor.setValue(newYaml);
+  console.info('All Vault Card purchases unlocked!');
 }
 
 /**
